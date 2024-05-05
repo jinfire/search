@@ -31,12 +31,10 @@ function App() {
 
   const handleSearch = (query) => {
     const trimQuery = query.trim();
-    console.log("검색어:", trimQuery);
     if(trimQuery === "") {
       console.log("검색어를 입력해주세요");
     } else {
       const words = trimQuery.toLowerCase().split(' ');
-      console.log("단어: ", words);
       const index = lines.findIndex(line => {
         // 모든 단어가 현재 line에 포함되어 있는지 확인
         return words.every(word => line.toLowerCase().includes(word));
