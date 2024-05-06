@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from './SearchBar';
 import Card from './OutlinedCard';
+import './App.css'; // 스타일링을 위한 CSS 파일 import
 
 function App() {
   const [lines, setLines] = useState([
@@ -48,11 +49,13 @@ function App() {
 
   return (
     <div className="App">
+      <div className="search-container"> {/* SearchBar와 Card를 감싸는 div */}
       <SearchBar onSearch={handleSearch} />
       {lines.length > 0 && (
-        <Card line={lines[currentLineIndex]} />
+      <Card line={lines[currentLineIndex]} />
       )}
-      <div>
+      </div>
+      <div className="button-container"> {/* 버튼을 감싸는 div */}
         <button onClick={handlePrev} disabled={currentLineIndex === 0}>이전</button>
         <button onClick={handleNext} disabled={currentLineIndex === lines.length - 1}>다음</button>
       </div>
