@@ -52,12 +52,8 @@ function App() {
       <div className="search-container"> {/* SearchBar와 Card를 감싸는 div */}
       <SearchBar onSearch={handleSearch} />
       {lines.length > 0 && (
-      <Card line={lines[currentLineIndex]} />
+      <Card lines={lines} idx ={currentLineIndex} />
       )}
-      </div>
-      <div className="button-container"> {/* 버튼을 감싸는 div */}
-        <button onClick={handlePrev} disabled={currentLineIndex === 0}>이전</button>
-        <button onClick={handleNext} disabled={currentLineIndex === lines.length - 1}>다음</button>
       </div>
     </div>
   );
