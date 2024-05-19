@@ -1,8 +1,15 @@
+.center-image {
+  display: block;
+  margin: auto;
+}
+
+.image-container {
+  text-align: center;
+}
 .search-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 40px; /* Card와의 간격 조절 */
 }
 
 .card {
