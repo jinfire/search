@@ -9,7 +9,6 @@ import ChevronLeftRounded from "@mui/icons-material/ChevronLeftRounded";
 import Color from "color"; // v3.2.1
 import { styled } from "@mui/material/styles";
 
-
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
   borderRadius: 16,
   transition: "0.2s",
