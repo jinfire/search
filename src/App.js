@@ -38,12 +38,23 @@ function App() {
       console.log("검색어를 입력해주세요");
     } else {
       const words = trimQuery.toLowerCase().split(' ');
-      const index = lines.findIndex(line => {
-        // 모든 단어가 현재 line에 포함되어 있는지 확인
-        return words.every(word => line.toLowerCase().includes(word));
+      const indices = [];
+
+      lines.forEach((line,i) => {
+        if(words.every(word =>line.toLowerCase().includes(word)))
+          indices.push(i);
       });
-      if(index !== -1){
-        setCurrentLineIndex(index);
+
+      if(indices.length> 0) {
+        const fivelines=[];
+        const idx = indices[0];
+
+        const start = Math.min(0,idx-2);
+        const end = Math.max(lines.length,idx+2);
+        fivelines= lines.slice(start,end);
+        setCurrentLineIndex(idx);
+        } else {
+        console.log("검색어를 찾을 수 없습니다");
       }
     }
   };

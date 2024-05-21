@@ -8,6 +8,16 @@ import ChevronRightRounded from "@mui/icons-material/ChevronRightRounded";
 import ChevronLeftRounded from "@mui/icons-material/ChevronLeftRounded";
 import Color from "color"; // v3.2.1
 import { styled } from "@mui/material/styles";
+import Dialog from '@mui/material/Dialog';
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
 
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
   borderRadius: 16,
@@ -50,22 +60,27 @@ const CustomCard = ({ color, borderColor, content}) => (
   );
 
 export default function OutlinedCard({lines, idx}) {
-  const [curLineIdx, setCurLineIdx] = useState(idx);
+  const [open, setOpen] = React.useState(false);
 
-  const handleNextClick = () => {
-    setCurLineIdx(curLineIdx + 1);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const handlePrevClick = () => {
-    setCurLineIdx(curLineIdx - 1);
-  };
   return (
     <div>
-    <CustomCard
+    <CustomCard onClick={handleClickOpen}
       color="#ffffff"
       borderColor="#87CEEB"
-      content={lines[curLineIdx]}
+      content={lines[idx]}
     />
+    <BootstrapDialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      ></BootstrapDialog>
     </div>
   );
 }
