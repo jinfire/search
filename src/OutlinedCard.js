@@ -9,6 +9,10 @@ import ChevronLeftRounded from "@mui/icons-material/ChevronLeftRounded";
 import Color from "color"; // v3.2.1
 import { styled } from "@mui/material/styles";
 import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -49,8 +53,8 @@ const TypographyTitle = styled(Typography)(() => ({
   color: "#000"
 }));
 
-const CustomCard = ({ color, borderColor, content}) => (
-  <CardActionAreaActionArea>
+const CustomCard = ({ color, borderColor, content, onClick}) => (
+  <CardActionAreaActionArea onClick={onClick}>
   <StyledCard color={color} borderColor={borderColor}>
     <CardContentContent color={color}>
       <TypographyTitle variant="h3">{content}</TypographyTitle>
@@ -71,7 +75,8 @@ export default function OutlinedCard({lines, idx}) {
 
   return (
     <div>
-    <CustomCard onClick={handleClickOpen}
+    <CustomCard 
+      onClick={handleClickOpen}
       color="#ffffff"
       borderColor="#87CEEB"
       content={lines[idx]}
@@ -80,7 +85,29 @@ export default function OutlinedCard({lines, idx}) {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-      ></BootstrapDialog>
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Understanding the Context
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+              {lines}
+          </Typography>
+        </DialogContent>
+      </BootstrapDialog>
+      
     </div>
   );
 }

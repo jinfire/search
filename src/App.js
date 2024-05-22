@@ -3,7 +3,6 @@ import SearchBar from './SearchBar';
 import Card from './OutlinedCard';
 import './App.css'; // 스타일링을 위한 CSS 파일 import
 import myImage from './logo192.png'; // 이미지를 import
-import CustomizedDialogs from './Dialog';
 
 function App() {
   const [lines, setLines] = useState([
@@ -70,7 +69,6 @@ function App() {
       {lines.length > 0 && (
       <Card lines={lines} idx ={currentLineIndex} />
       )}
-      <CustomizedDialogs/>
       </div>
     </div>
   );
