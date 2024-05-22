@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ChevronRightRounded from "@mui/icons-material/ChevronRightRounded";
-import ChevronLeftRounded from "@mui/icons-material/ChevronLeftRounded";
 import Color from "color"; // v3.2.1
 import { styled } from "@mui/material/styles";
 import Dialog from '@mui/material/Dialog';
@@ -63,10 +60,12 @@ const CustomCard = ({ color, borderColor, content, onClick}) => (
   </CardActionAreaActionArea>
   );
 
-export default function OutlinedCard({lines, idx}) {
+export default function OutlinedCard({lines, idx,fivelines}) {
   const [open, setOpen] = React.useState(false);
+  const [curContent, setContent] = React.userState('');
 
   const handleClickOpen = () => {
+    setContent(fivelines);
     setOpen(true);
   };
   const handleClose = () => {
@@ -76,6 +75,7 @@ export default function OutlinedCard({lines, idx}) {
   return (
     <div>
     <CustomCard 
+      key={idx}
       onClick={handleClickOpen}
       color="#ffffff"
       borderColor="#87CEEB"
@@ -103,7 +103,7 @@ export default function OutlinedCard({lines, idx}) {
         </IconButton>
         <DialogContent dividers>
           <Typography gutterBottom>
-              {lines}
+              {curContent}
           </Typography>
         </DialogContent>
       </BootstrapDialog>

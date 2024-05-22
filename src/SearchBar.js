@@ -48,7 +48,6 @@ function SearchBar({ onSearch }) {
   const [query, setQuery] = useState('');
 
   const handleChange = (e) => {
-    console.log("hello");
     setQuery(e.target.value);
   };
 

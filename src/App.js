@@ -12,24 +12,8 @@ function App() {
     "love each other let's be honest though",
     "we'll probably be shipping these two"
   ]);
-  const [currentLineIndex, setCurrentLineIndex] = useState(0);
-
-  // 함수를 이용하여 다음 검색 결과 보여주기
-  const handleNext = () => {
-    // 구현 내용은 여기에 추가하세요
-    if (currentLineIndex < lines.length - 1) {
-      setCurrentLineIndex(currentLineIndex + 1);
-    }
-  };
-
-  // 함수를 이용하여 이전 검색 결과 보여주기
-  const handlePrev = () => {
-    console.log("prev");
-    // 구현 내용은 여기에 추가하세요
-    if (currentLineIndex > 0) {
-      setCurrentLineIndex(currentLineIndex - 1);
-    }
-  };
+  const [indices, setIndices] = useState([]);
+  const [fivelines, setFivelines] = useState([]);
 
   const handleSearch = (query) => {
     const trimQuery = query.trim();
@@ -37,23 +21,27 @@ function App() {
       console.log("검색어를 입력해주세요");
     } else {
       const words = trimQuery.toLowerCase().split(' ');
-      const indices = [];
+      const foundIndices = [];
 
       lines.forEach((line,i) => {
         if(words.every(word =>line.toLowerCase().includes(word)))
-          indices.push(i);
+          foundIndices.push(i);
       });
 
-      if(indices.length> 0) {
-        const fivelines=[];
-        const idx = indices[0];
-
-        const start = Math.min(0,idx-2);
-        const end = Math.max(lines.length,idx+2);
-        fivelines= lines.slice(start,end);
-        setCurrentLineIndex(idx);
+      if(foundIndices.length> 0) {
+        const fivelinesarr = foundIndices.map((idx) => {
+          const start = Math.min(0,idx-2);
+          const end = Math.max(lines.length,idx+2);
+          return lines.slice(start,end).join(' ');
+      });
+        setIndices(foundIndices);
+        setFivelines(fivelinesarr);
+        console.log("idx:", foundIndices);
+        console.log("fivelines:", fivelinesarr);
         } else {
         console.log("검색어를 찾을 수 없습니다");
+        setIndices([]);
+        setFivelines([]);
       }
     }
   };
@@ -66,8 +54,10 @@ function App() {
       </div>
       <div className="search-container"> {/* SearchBar와 Card를 감싸는 div */}
       <SearchBar onSearch={handleSearch} />
-      {lines.length > 0 && (
-      <Card lines={lines} idx ={currentLineIndex} />
+      {indices.length > 0 && (
+        indices.map((idx,index) => (
+          <Card key={idx} lines={lines} idx = {idx} fivelines ={fivelines[index]} />
+        ))
       )}
       </div>
     </div>
