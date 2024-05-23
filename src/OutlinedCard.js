@@ -28,7 +28,7 @@ const CardActionAreaActionArea = styled(CardActionArea)(() => ({
   } 
 }));
 const StyledCard = styled(Card)(({color,borderColor}) => ({
-  minWidth: 256,
+  minWidth: 528,
   borderRadius: 16,
   border : `2px solid ${borderColor}`,
   boxShadow: "none",
@@ -47,7 +47,8 @@ const CardContentContent = styled(CardContent)(({
 const TypographyTitle = styled(Typography)(() => ({
   fontFamily: "Keania One",
   fontSize: "1.5rem",
-  color: "#000"
+  color: "#000",
+  textAlign: "center"
 }));
 
 const CustomCard = ({ color, borderColor, content, onClick}) => (
@@ -62,7 +63,7 @@ const CustomCard = ({ color, borderColor, content, onClick}) => (
 
 export default function OutlinedCard({lines, idx,fivelines}) {
   const [open, setOpen] = React.useState(false);
-  const [curContent, setContent] = React.userState('');
+  const [curContent, setContent] = React.useState('');
 
   const handleClickOpen = () => {
     setContent(fivelines);
