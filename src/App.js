@@ -12,7 +12,7 @@ function App() {
   const [searchAttempted, setSearchAttempted] = useState(false); // new state to track search attempts
 
   useEffect( () =>{
-    fetch('/data.txt')
+    fetch('/script_comments.txt')
     .then(response => response.text())
     .then(text => setLines(text.split('\n')));
   }, []);
