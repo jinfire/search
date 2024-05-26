@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import Card from './OutlinedCard';
 import './App.css'; // 스타일링을 위한 CSS 파일 import
-import myImage from './logo192.png'; // 이미지를 import
+import logo from './logo4.PNG'; // 이미지를 import
 import Typography from '@mui/material/Typography';
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
   return (
     <div className="App">
       <div className="image-container">
-      <img src={myImage} alt="My Image" /> {/* 이미지를 추가 */}
+      <img src={logo} alt="My Image" /> {/* 이미지를 추가 */}
       </div>
       <div className="search-container"> {/* SearchBar와 Card를 감싸는 div */}
       <SearchBar onSearch={handleSearch} />
