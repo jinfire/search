@@ -13,12 +13,21 @@
   gap:20px;
 }
 
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:20px;
+  padding-top: 100px; /* 검색 결과의 상단 패딩을 추가하여 간격을 늘림 */
+}
+
 .card {
   margin-top: 20px; /* Card를 위로 이동하기 위해 값을 조정 */
   padding: 20px; /* Card를 더 크게 만들기 위해 패딩을 늘립니다. */
   border: 1px solid #ccc;
   border-radius: 5px;
   max-width: 600px; /* Card의 최대 너비를 지정합니다. */
+  gap:20px;
 }
 
 .button-container {

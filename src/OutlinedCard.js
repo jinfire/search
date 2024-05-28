@@ -21,14 +21,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
-  borderRadius: 16,
   transition: "0.2s",
   "&:hover": {
     transform: "scale(1.1)"
   } 
 }));
 const StyledCard = styled(Card)(({color,borderColor}) => ({
-  minWidth: 528,
+  minWidth: 1016,
   borderRadius: 16,
   border : `2px solid ${borderColor}`,
   boxShadow: "none",
@@ -61,7 +60,7 @@ const CustomCard = ({ color, borderColor, content, onClick}) => (
   </CardActionAreaActionArea>
   );
 
-export default function OutlinedCard({lines, idx}) {
+export default function OutlinedCard({key,lines, sentence}) {
   const [open, setOpen] = React.useState(false);
   const [curContent, setContent] = React.useState('');
 
@@ -76,11 +75,11 @@ export default function OutlinedCard({lines, idx}) {
   return (
     <div>
     <CustomCard 
-      key={idx}
+      key={key}
       onClick={handleClickOpen}
       color="#ffffff"
       borderColor="#87CEEB"
-      content={lines[idx]}
+      content={sentence}
     />
     <BootstrapDialog
         onClose={handleClose}
@@ -88,7 +87,7 @@ export default function OutlinedCard({lines, idx}) {
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Understanding the Context
+          Full Text
         </DialogTitle>
         <IconButton
           aria-label="close"
