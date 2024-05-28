@@ -33,6 +33,10 @@ const StyledCard = styled(Card)(({color,borderColor}) => ({
   boxShadow: "none",
   "&:hover": {
     boxShadow: `0 6px 12px 0 ${Color(color).rotate(-12).darken(0.2).fade(0.5)}`
+  },
+  [theme.breakpoints.down('sm')]: {  // 600px 이하에서 적용될 스타일
+    minWidth: '100%',  // 모바일 화면에서는 카드의 너비를 화면 너비에 맞춤
+    margin: theme.spacing(1)  // 마진 추가
   }
 }));
 const CardContentContent = styled(CardContent)(({
