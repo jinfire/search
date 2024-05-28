@@ -26,7 +26,7 @@ const CardActionAreaActionArea = styled(CardActionArea)(() => ({
     transform: "scale(1.1)"
   } 
 }));
-const StyledCard = styled(Card)(({color,borderColor}) => ({
+const StyledCard = styled(Card)(({color,borderColor, theme}) => ({
   minWidth: 1016,
   borderRadius: 16,
   border : `2px solid ${borderColor}`,
