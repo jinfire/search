@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 function App() {
   const [lines, setLines] = useState([]);
   const [indices, setIndices] = useState([]);
-  const [fivelines, setFivelines] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [searchAttempted, setSearchAttempted] = useState(false); // new state to track search attempts
 
   useEffect( () =>{
@@ -21,30 +21,20 @@ function App() {
     const trimQuery = query.trim();
     setSearchAttempted(true); // Set searchAttempted to true whenever a search is performed
     if(trimQuery === "") {
-      setIndices([]);
-      setFivelines([]);
+      setSearchResults([]);
       setSearchAttempted(false); // Reset on empty query
     } else {
-      const words = trimQuery.toLowerCase().split(' ');
-      const foundIndices = [];
-
-      lines.forEach((line, i) => {
-        if(words.every(word => line.toLowerCase().includes(word)))
-          foundIndices.push(i);
-      });
-
-      if(foundIndices.length > 0) {
-        const fivelinesarr = foundIndices.map((idx) => {
-          const start = Math.max(0, idx-2);
-          const end = Math.min(lines.length, idx+3);
-          return lines.slice(start, end).join(' ');
-        });
-        setIndices(foundIndices);
-        setFivelines(fivelinesarr);
-      } else {
-        setIndices([]);
-        setFivelines([]);
-      }
+      const results = lines.reduce((acc, line) => {
+        const sentences = line.split('.').map(sentence => sentence.trim());
+        const matchingSentences = sentences.filter(sentence => sentence.toLowerCase().includes(trimQuery));
+        if (matchingSentences.length > 0) {
+          console.log("line: ", line);
+          console.log("matchingSentences: ", matchingSentences);
+          acc.push({ line, sentences: matchingSentences });
+        }
+        return acc;
+      }, []);
+      setSearchResults(results);
     }
   };
 
@@ -56,14 +46,16 @@ function App() {
       </div>
       <div className="search-container"> {/* SearchBar와 Card를 감싸는 div */}
       <SearchBar onSearch={handleSearch} />
-      {searchAttempted && indices.length === 0 ? (
+      {searchAttempted && searchResults.length === 0 ? (
         <Typography variant="h4" color="textSecondary" style={{ opacity: 0.5 }}>
           Sorry... we can't find any example...
         </Typography>
       ) : (
-        indices.map((idx, index) => (
-          <Card key={idx} lines={lines} idx = {idx} fivelines ={fivelines[index]} />
-        ))
+        searchResults.map((result, index) => {
+          console.log(`result ${index}:`, result);
+          console.log('index', index);
+          return <Card key={index} lines={result.line} idx = {result.sentences[index]} />
+          })
       )}
       </div>
     </div>

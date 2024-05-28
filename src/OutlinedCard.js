@@ -61,12 +61,12 @@ const CustomCard = ({ color, borderColor, content, onClick}) => (
   </CardActionAreaActionArea>
   );
 
-export default function OutlinedCard({lines, idx,fivelines}) {
+export default function OutlinedCard({lines, idx}) {
   const [open, setOpen] = React.useState(false);
   const [curContent, setContent] = React.useState('');
 
   const handleClickOpen = () => {
-    setContent(fivelines);
+    setContent(lines);
     setOpen(true);
   };
   const handleClose = () => {
