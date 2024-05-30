@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography';
 
 function App() {
   const [lines, setLines] = useState([]);
-  const [indices, setIndices] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [searchAttempted, setSearchAttempted] = useState(false); // new state to track search attempts
+  const [query, setQuery] = useState("");
 
   useEffect( () =>{
     fetch('/script_comments.txt')
@@ -17,26 +17,24 @@ function App() {
     .then(text => setLines(text.split('\n')));
   }, []);
 
-  const handleSearch = (query) => {
-    const trimQuery = query.trim();
+  const handleSearch = (inputQuery) => {
+    const trimQuery = inputQuery.trim().toLowerCase();
+    setQuery(trimQuery);
     setSearchAttempted(true); // Set searchAttempted to true whenever a search is performed
     if(trimQuery === "") {
       setSearchResults([]);
       setSearchAttempted(false); // Reset on empty query
     } else {
-      const results = lines.reduce((acc, line) => {
+      const results = lines.reduce((resArray, line) => {
         const sentences = [];
         for (let i = 0; i < line.length; i += 132) {
           sentences.push(line.substring(i, i + 132).trim());
         }
-        //const sentences = line.split('.').map(sentence => sentence.trim());
         const matchingSentences = sentences.filter(sentence => sentence.toLowerCase().includes(trimQuery));
         if (matchingSentences.length > 0) {
-          console.log("line: ", line);
-          console.log("matchingSentences: ", matchingSentences);
-          acc.push({ line, sentences: matchingSentences });
+          resArray.push({ line, sentences: matchingSentences });
         }
-        return acc;
+        return resArray;
       }, []);
       setSearchResults(results);
     }
@@ -57,7 +55,7 @@ function App() {
         </Typography>
       ) : (
         searchResults.map((result, index) => {
-          return <Card key={index} lines={result.line} sentence = {result.sentences[0]} />
+          return <Card key={index} lines={result.line} sentence = {result.sentences[0]} query={query} />
           })
       )}
       </div>

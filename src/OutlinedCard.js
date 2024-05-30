@@ -54,17 +54,28 @@ const TypographyTitle = styled(Typography)(() => ({
   textAlign: "center"
 }));
 
-const CustomCard = ({ color, borderColor, content, onClick}) => (
-  <CardActionAreaActionArea onClick={onClick}>
-  <StyledCard color={color} borderColor={borderColor}>
-    <CardContentContent color={color}>
-      <TypographyTitle variant="h3">{content}</TypographyTitle>
-    </CardContentContent>
-  </StyledCard>
-  </CardActionAreaActionArea>
-  );
+const CustomCard = ({ color, borderColor, content, onClick, query}) => {
+  console.log("query: ", query);
+  const highlightedContent = content.split(query).reduce((prev, current, index, array) => {
+    if (index < array.length - 1) {
+      return prev + current + `<span style="background-color: yellow;">${query}</span>`;
+    } else {
+      return prev + current;
+    }
+  }, "");
 
-export default function OutlinedCard({key,lines, sentence}) {
+  return (
+    <CardActionAreaActionArea onClick={onClick}>
+      <StyledCard color={color} borderColor={borderColor}>
+        <CardContentContent color={color}>
+          <TypographyTitle variant="h3" dangerouslySetInnerHTML={{ __html: highlightedContent }} />
+        </CardContentContent>
+      </StyledCard>
+    </CardActionAreaActionArea>
+  );
+};
+
+export default function OutlinedCard({key,lines, sentence, query}) {
   const [open, setOpen] = React.useState(false);
   const [curContent, setContent] = React.useState('');
 
@@ -84,6 +95,7 @@ export default function OutlinedCard({key,lines, sentence}) {
       color="#ffffff"
       borderColor="#87CEEB"
       content={sentence}
+      query={query}
     />
     <BootstrapDialog
         onClose={handleClose}
