@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import rehypeSanitize from 'rehype-sanitize';
+import DOMPurify from 'dompurify';
 import Card from '@mui/material/Card';
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
@@ -71,12 +69,13 @@ const highlightQuery = (text, query) => {
 
 const CustomCard = ({ color, borderColor, content, onClick, query}) => {
   const highlightedContent = highlightQuery(content, query);
+  const cleanHtml = DOMPurify.sanitize(highlightedContent);
 
   return (
     <CardActionAreaActionArea onClick={onClick}>
       <StyledCard color={color} borderColor={borderColor}>
         <CardContentContent color={color}>
-          <TypographyTitle variant="h3" dangerouslySetInnerHTML={{ __html: highlightedContent }} />
+          <TypographyTitle variant="h3" dangerouslySetInnerHTML={{ __html: cleanHtml }} />
         </CardContentContent>
       </StyledCard>
     </CardActionAreaActionArea>
@@ -85,10 +84,11 @@ const CustomCard = ({ color, borderColor, content, onClick, query}) => {
 
 const CustomDialogContent = ({ curContent, query }) => {
   const highlightedContent = highlightQuery(curContent, query);
+  const cleanHtml = DOMPurify.sanitize(highlightedContent);
 
   return (
     <DialogContent dividers>
-      <Typography gutterBottom dangerouslySetInnerHTML={{ __html: highlightedContent }} />
+      <Typography gutterBottom dangerouslySetInnerHTML={{ __html: cleanHtml }} />
     </DialogContent>
   );
 };
