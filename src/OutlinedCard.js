@@ -23,7 +23,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     minWidth: '150px',  // 최소 너비 설정
     textAlign: 'center',  // 모든 텍스트를 가운데 정렬
     [theme.breakpoints.down('sm')]: {  // 600px 이하에서 적용될 스타일
-      minWidth: '80px',  // 모바일 화면에서는 카드의 너비를 50px로 조정
+      minWidth: '100px',  // 모바일 화면에서는 카드의 너비를 50px로 조정
     }
   }
 }));
@@ -43,7 +43,7 @@ const StyledCard = styled(Card)(({color,borderColor, theme}) => ({
     boxShadow: `0 6px 12px 0 ${Color(color).rotate(-12).darken(0.2).fade(0.5)}`
   },
   [theme.breakpoints.down('sm')]: {  // 600px 이하에서 적용될 스타일
-    minWidth: '100%',  // 모바일 화면에서는 카드의 너비를 화면 너비에 맞춤
+    minWidth: '800%',  // 모바일 화면에서는 카드의 너비를 화면 너비에 맞춤
     margin: theme.spacing(1)  // 마진 추가
   }
 }));
