@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
 import Card from '@mui/material/Card';
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
@@ -18,6 +21,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
+  '& .MuiPaper-root': {  // MUI Dialog의 기본 paper 요소에 스타일을 적용
+    minWidth: '150px',  // 최소 너비 설정
+    textAlign: 'center',  // 모든 텍스트를 가운데 정렬
+    [theme.breakpoints.down('sm')]: {  // 600px 이하에서 적용될 스타일
+      minWidth: '50px',  // 모바일 화면에서는 카드의 너비를 50px로 조정
+    }
+  }
 }));
 
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
@@ -54,15 +64,13 @@ const TypographyTitle = styled(Typography)(() => ({
   textAlign: "center"
 }));
 
+const highlightQuery = (text, query) => {
+  const regex = new RegExp(`(${query})`, 'gi'); // 'g' for global, 'i' for case insensitive
+  return text.replace(regex, `<span style="background-color: yellow;">$1</span>`);
+};
+
 const CustomCard = ({ color, borderColor, content, onClick, query}) => {
-  console.log("query: ", query);
-  const highlightedContent = content.split(query).reduce((prev, current, index, array) => {
-    if (index < array.length - 1) {
-      return prev + current + `<span style="background-color: yellow;">${query}</span>`;
-    } else {
-      return prev + current;
-    }
-  }, "");
+  const highlightedContent = highlightQuery(content, query);
 
   return (
     <CardActionAreaActionArea onClick={onClick}>
@@ -73,11 +81,6 @@ const CustomCard = ({ color, borderColor, content, onClick, query}) => {
       </StyledCard>
     </CardActionAreaActionArea>
   );
-};
-
-const highlightQuery = (text, query) => {
-  const regex = new RegExp(`(${query})`, 'gi'); // 'g' for global, 'i' for case insensitive
-  return text.replace(regex, `<span style="background-color: yellow;">$1</span>`);
 };
 
 const CustomDialogContent = ({ curContent, query }) => {
