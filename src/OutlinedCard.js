@@ -75,6 +75,21 @@ const CustomCard = ({ color, borderColor, content, onClick, query}) => {
   );
 };
 
+const highlightQuery = (text, query) => {
+  const regex = new RegExp(`(${query})`, 'gi'); // 'g' for global, 'i' for case insensitive
+  return text.replace(regex, `<span style="background-color: yellow;">$1</span>`);
+};
+
+const CustomDialogContent = ({ curContent, query }) => {
+  const highlightedContent = highlightQuery(curContent, query);
+
+  return (
+    <DialogContent dividers>
+      <Typography gutterBottom dangerouslySetInnerHTML={{ __html: highlightedContent }} />
+    </DialogContent>
+  );
+};
+
 export default function OutlinedCard({key,lines, sentence, query}) {
   const [open, setOpen] = React.useState(false);
   const [curContent, setContent] = React.useState('');
@@ -117,11 +132,10 @@ export default function OutlinedCard({key,lines, sentence, query}) {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-              {curContent}
-          </Typography>
-        </DialogContent>
+        <CustomDialogContent
+          curContent={curContent}
+          query={query}
+        />
       </BootstrapDialog>
       
     </div>
